@@ -60,61 +60,26 @@
 </table>
     
     
-
-
-        
 <script>
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
-
         if(xmlhttp.readyState == 4){
             var responseObject = JSON.parse(xmlhttp.responseText);
 
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[0] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("1").innerHTML = '<a href="' + data.url + '">' + data.title + '</a>'
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[1] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("2").innerHTML = '<a href="' + data.url + '">' + data.title + '</a>'
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[2] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("3").innerHTML = '<a href="' + data.url + '">' + data.title + '</a>'
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[3] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("4").innerHTML = '<a href="' + data.url + '">' + data.title + '</a>'
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[4] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("5").innerHTML = '<a href="' + data.url + '">' + data.title + '</a>'
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[5] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("6").innerHTML = '<a href="' + data.url + '">' + data.title + '</a>'
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[6] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("7").innerHTML = '<a href="' + data.url + '">' + data.title + '</a>'
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[7] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("8").innerHTML = '<a href="' + data.url + '">' + data.title +'</a>';
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[8] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("9").innerHTML = '<a href="' + data.url + '">' + data.title +'</a>'
-            });
-            $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[9] +".json?print=pretty", function( data )             {
-                $( ".result" ).html( data );
-                document.getElementById("10").innerHTML = '<a href="' + data.url + '">' + data.title +'</a>'
-            });
+            var parser = function(idno) {
+                return function(data) {
+                    document.getElementById(idno.toString()).innerHTML = '<a href="' + data.url + '">' + data.title +'</a>';
+                }
+            };
+
+            for (var i = 1; i <= 10; i++) {
+                $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[i-1] +".json?print=pretty", parser(i));
+            }
         }
     };
     xmlhttp.open("GET", "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty", true);
     xmlhttp.send();
-
+    
 </script>
 
 </body>
