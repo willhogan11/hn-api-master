@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hacker News API</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <h1>Here's what Hacker News sent:</h1>
+
+  <p id="hn"></p> <!-- The HTML P id, that links to the javaScript -->
+
+  <script type="text/javascript">
+
+    var xmlhttp = new XMLHttpRequest(); //  Declares a new httpRequest object
+
+    // When the ready state is 4, the function is complete and the details are displayed from the ajax call to the tag
+    // The data is returned in the form of xml or json, from the webserver to the javascript file. 
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            document.getElementById("hn").innerHTML = xmlhttp.responseText; // Send the response (THIS IS A STRING) to the html p tag as linked in "hn"
+            var responseObject = JSON.parse(xmlhttp.responseText); // Now amn Oject in Memory in this case an Array
+             console.log(responseObject[0]); // id needed to request from the Hacker News API
+            // console.log(xmlhttp.responseText[9]);
+            
+            
+            // 3. Send a second AJAX request, for the first id in the list returned from the first request.
+            var xmlhttp2 = new XMLHttpRequest();
+            xmlhttp2.onreadystatechange = function(){
+                console.log(xmlhttp2.responseText);
+            };
+            xmlhttp2.open("GET", "https://hacker-news.firebaseio.com/v0/item/" + responseObject[0] + ".json?print=pretty", true);
+            xmlhttp2.send();*/
+            
+            
+            // 5. Use $.get() to perform the AJAX calls instead of XMLHttpRequest.
+     /*       $.get( "https://hacker-news.firebaseio.com/v0/item/"+ responseObject[0] +".json?print=pretty", function( data ) {
+                $( ".result" ).html( data );
+                console.log( data );
+            });
+            */
+            
+        }else{
+            document.getElementById("hn").innerHTML = "Loading..."; // Whilst the above is happening, display this
+        }
+    };
+    
+    xmlhttp.open("GET", "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty", true); // The true means Asynchronous
+    xmlhttp.send(); // Returns straight away even though not finished
+ 
+    
+  </script>
+</body>
+</html>
